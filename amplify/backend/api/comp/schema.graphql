@@ -1,0 +1,5 @@
+type Comp @model {
+  id: ID!
+  name: String!
+  description: String
+}
