@@ -60,7 +60,7 @@ const dummyCompList = [dummyComp, dummyConfirmedComp];
 
 function App() {
   const [adminPassword, setAdminPassword] = useState("");
-  const [compList, setCompList] = useState(dummyCompList);
+  const [compList, setCompList] = useState<Array<CompType>>([]);
 
   useEffect(() => {
     fetchComps();
@@ -74,7 +74,15 @@ function App() {
   const createNewComp = async (newComp: CompType) => {
     await API.graphql({
       query: createComp,
-      variables: { input: { ...newComp, compId: getNextCompId() } },
+      variables: {
+        input: {
+          compId: getNextCompId(),
+          compName: newComp.compName,
+          ships: newComp.ships,
+          isConfirmed: false,
+          note: newComp.note,
+        },
+      },
     });
     window.location.reload();
   };
