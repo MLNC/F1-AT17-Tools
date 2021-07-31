@@ -1,5 +1,16 @@
 type Comp @model {
   id: ID!
-  name: String!
-  description: String
+  compId: Int!
+  compName: String!
+  isConfirmed: Boolean
+  note: String
+  ships: [Ship!]!
+}
+
+type Ship {
+  shipId: Int!
+  shipName: String!
+  points: Int!
+  hullType: String!
+  fitting: String!
 }

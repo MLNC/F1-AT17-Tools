@@ -5,8 +5,17 @@ export const getComp = /* GraphQL */ `
   query GetComp($id: ID!) {
     getComp(id: $id) {
       id
-      name
-      description
+      compId
+      compName
+      isConfirmed
+      note
+      ships {
+        shipId
+        shipName
+        points
+        hullType
+        fitting
+      }
       createdAt
       updatedAt
     }
@@ -21,8 +30,17 @@ export const listComps = /* GraphQL */ `
     listComps(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        description
+        compId
+        compName
+        isConfirmed
+        note
+        ships {
+          shipId
+          shipName
+          points
+          hullType
+          fitting
+        }
         createdAt
         updatedAt
       }

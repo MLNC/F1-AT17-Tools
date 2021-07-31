@@ -5,8 +5,17 @@ export const onCreateComp = /* GraphQL */ `
   subscription OnCreateComp {
     onCreateComp {
       id
-      name
-      description
+      compId
+      compName
+      isConfirmed
+      note
+      ships {
+        shipId
+        shipName
+        points
+        hullType
+        fitting
+      }
       createdAt
       updatedAt
     }
@@ -16,8 +25,17 @@ export const onUpdateComp = /* GraphQL */ `
   subscription OnUpdateComp {
     onUpdateComp {
       id
-      name
-      description
+      compId
+      compName
+      isConfirmed
+      note
+      ships {
+        shipId
+        shipName
+        points
+        hullType
+        fitting
+      }
       createdAt
       updatedAt
     }
@@ -27,8 +45,17 @@ export const onDeleteComp = /* GraphQL */ `
   subscription OnDeleteComp {
     onDeleteComp {
       id
-      name
-      description
+      compId
+      compName
+      isConfirmed
+      note
+      ships {
+        shipId
+        shipName
+        points
+        hullType
+        fitting
+      }
       createdAt
       updatedAt
     }

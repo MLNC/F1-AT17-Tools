@@ -10,7 +10,7 @@ for row in range(3, 243):
   points = sheet.cell(row, column = pointsCol).value
   hullType = sheet.cell(row, column = hullTypeCol).value
 
-  pointsDict.append({ 'shipId': row-2,'name': name, 'points': points, 'hullType': hullType, 'fitting': ''})
+  pointsDict.append({ 'shipId': row-2,'shipName': name, 'points': points, 'hullType': hullType, 'fitting': ''})
 
 with open('../public/DO_NOT_EDIT-AT17-ShipPoints.json', 'w', encoding='utf-8') as f:
   json.dump(pointsDict, f, indent=2)

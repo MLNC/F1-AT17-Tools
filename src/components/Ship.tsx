@@ -9,6 +9,7 @@ interface ShipProps {
   isConfirmed: boolean;
   ship: ShipType;
   updateShip: (idx: number, newShip: ShipType) => void;
+  disabled?: boolean;
 }
 
 ReactModal.setAppElement("#root");
@@ -47,8 +48,8 @@ function Ship(props: ShipProps) {
       <td>
         <Select
           options={ShipPoints}
-          labelField="name"
-          valueField="name"
+          labelField="shipName"
+          valueField="shipName"
           values={props.ship ? [props.ship] : []}
           onChange={(v) => {
             if (v.length !== 0) {
@@ -58,18 +59,26 @@ function Ship(props: ShipProps) {
             }
           }}
           multi={false}
-          disabled={props.isConfirmed}
+          disabled={props.isConfirmed || props.disabled}
         />
       </td>
       <td style={{ textAlign: "center" }}>{props.ship?.points}</td>
       <td style={{ textAlign: "center" }}>{props.ship?.hullType}</td>
       <td style={{ textAlign: "center" }}>
         {!props.isConfirmed && (
-          <button onClick={() => setIsModalOpen(true)}>
-            {props.ship.fitting ? "编辑" : "空"}
+          <button
+            onClick={() => setIsModalOpen(true)}
+            disabled={props.disabled}
+          >
+            {props.ship.fitting ? "编辑" : "添加"}
           </button>
         )}
-        <button disabled={props.ship.fitting === ""}>复制</button>
+        <button
+          disabled={props.ship.fitting === ""}
+          onClick={() => navigator.clipboard.writeText(fitting)}
+        >
+          复制
+        </button>
       </td>
     </tr>
   );

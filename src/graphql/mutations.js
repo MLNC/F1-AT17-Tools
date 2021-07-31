@@ -8,8 +8,17 @@ export const createComp = /* GraphQL */ `
   ) {
     createComp(input: $input, condition: $condition) {
       id
-      name
-      description
+      compId
+      compName
+      isConfirmed
+      note
+      ships {
+        shipId
+        shipName
+        points
+        hullType
+        fitting
+      }
       createdAt
       updatedAt
     }
@@ -22,8 +31,17 @@ export const updateComp = /* GraphQL */ `
   ) {
     updateComp(input: $input, condition: $condition) {
       id
-      name
-      description
+      compId
+      compName
+      isConfirmed
+      note
+      ships {
+        shipId
+        shipName
+        points
+        hullType
+        fitting
+      }
       createdAt
       updatedAt
     }
@@ -36,8 +54,17 @@ export const deleteComp = /* GraphQL */ `
   ) {
     deleteComp(input: $input, condition: $condition) {
       id
-      name
-      description
+      compId
+      compName
+      isConfirmed
+      note
+      ships {
+        shipId
+        shipName
+        points
+        hullType
+        fitting
+      }
       createdAt
       updatedAt
     }

@@ -1,12 +1,13 @@
 export interface ShipType {
   shipId: number;
-  name: string;
+  shipName: string;
   points: number;
   hullType: string;
   fitting: string;
 }
 
 export interface CompType {
+  id: string;
   compId: number;
   compName: string;
   ships: Array<ShipType>;

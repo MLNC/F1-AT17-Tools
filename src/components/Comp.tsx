@@ -1,24 +1,69 @@
 import { useState } from "react";
 import Ship from "./Ship";
 import { CompType, ShipType } from "../utils/types";
+import { API } from "aws-amplify";
+import { updateComp } from "../graphql/mutations";
+import { useEffect } from "react";
 
 interface CompProps {
   comp: CompType;
   isEditing: boolean;
-  updateComp: (oldCompId: number, newComp: CompType) => void;
+  adminPassword: string;
+  createNewComp?: (newComp: CompType) => void;
 }
 
+const adminPassword = "IWantATShips";
+
 function Comp(props: CompProps) {
+  const [comp, setComp] = useState<CompType>(props.comp);
   const [isEditing, setIsEditing] = useState(props.isEditing);
 
-  const updateShip = (idx: number, newShip: ShipType) => {
-    const newShips = props.comp.ships;
-    newShips.splice(idx, 1, newShip);
+  useEffect(() => {
+    console.log(comp);
+  }, [comp]);
 
-    props.updateComp(props.comp.compId, {
-      ...props.comp,
-      ships: [...newShips],
+  const updateShip = (idx: number, newShip: ShipType) => {
+    const newShips = comp.ships;
+    newShips.splice(idx, 1, newShip);
+    setComp({ ...comp, ships: [...newShips] });
+  };
+
+  const updateCurrComp = async () => {
+    await API.graphql({
+      query: updateComp,
+      variables: {
+        input: {
+          id: comp.id,
+          compId: comp.compId,
+          compName: comp.compName,
+          ships: comp.ships,
+          isConfirmed: comp.isConfirmed,
+          note: comp.note,
+        },
+      },
     });
+    window.location.reload();
+  };
+
+  const confirmCurrComp = async (flag: boolean) => {
+    if (adminPassword === props.adminPassword) {
+      await API.graphql({
+        query: updateComp,
+        variables: {
+          input: {
+            id: comp.id,
+            compId: comp.compId,
+            compName: comp.compName,
+            ships: comp.ships,
+            isConfirmed: flag,
+            note: comp.note,
+          },
+        },
+      });
+      window.location.reload();
+    } else {
+      alert("Admin Password错误");
+    }
   };
 
   return (
@@ -27,17 +72,12 @@ function Comp(props: CompProps) {
         <tbody>
           <tr>
             <th colSpan={6} style={{ fontSize: "20px" }}>
-              <span style={{ marginRight: "1rem" }}>
-                No.{props.comp.compId}
-              </span>
+              <span style={{ marginRight: "1rem" }}>No.{comp.compId}</span>
               <input
-                value={props.comp.compName}
-                disabled={props.comp.isConfirmed || !isEditing}
+                value={comp.compName}
+                disabled={comp.isConfirmed || !isEditing}
                 onChange={(e) => {
-                  props.updateComp(props.comp.compId, {
-                    ...props.comp,
-                    compName: e.target.value,
-                  });
+                  setComp({ ...comp, compName: e.target.value });
                 }}
               ></input>
             </th>
@@ -45,14 +85,11 @@ function Comp(props: CompProps) {
           <tr>
             <th colSpan={6}>
               <textarea
-                value={props.comp.note}
-                disabled={props.comp.isConfirmed || !isEditing}
+                value={comp.note}
+                disabled={comp.isConfirmed || !isEditing}
                 style={{ fontSize: "15px", width: "100%", resize: "vertical" }}
                 onChange={(e) => {
-                  props.updateComp(props.comp.compId, {
-                    ...props.comp,
-                    note: e.target.value,
-                  });
+                  setComp({ ...comp, note: e.target.value });
                 }}
               ></textarea>
             </th>
@@ -65,43 +102,58 @@ function Comp(props: CompProps) {
             <th>Fitting</th>
           </tr>
 
-          {props.comp.ships.map((ship, idx) => (
+          {comp.ships.map((ship, idx) => (
             <Ship
-              key={ship?.name + idx}
+              key={ship?.shipName + idx}
               idx={idx}
               ship={ship}
-              isConfirmed={props.comp.isConfirmed}
+              isConfirmed={comp.isConfirmed}
               updateShip={updateShip}
+              disabled={!isEditing}
             ></Ship>
           ))}
           <tr>
             <th></th>
             <th>Total</th>
             <th>
-              {props.comp.ships.reduce(
-                (carrier, ship) => carrier + ship.points,
-                0
-              )}
+              {comp.ships.reduce((carrier, ship) => carrier + ship.points, 0)}
             </th>
           </tr>
         </tbody>
       </table>
-      {props.comp.isConfirmed ? (
-        <button style={{ width: "100%", padding: "1rem" }}>
+      {comp.isConfirmed ? (
+        <button
+          style={{ width: "100%", padding: "1rem" }}
+          onClick={() => confirmCurrComp(false)}
+        >
           回到待定(admin)
         </button>
       ) : (
         <div>
           {isEditing ? (
-            <button
-              style={{ width: "100%", padding: "1rem" }}
-              onClick={() => {
-                setIsEditing(false);
-                // TODO API
-              }}
-            >
-              上传阵容
-            </button>
+            comp.compId === -1 ? (
+              <button
+                style={{ width: "100%", padding: "1rem" }}
+                onClick={() => {
+                  setIsEditing(false);
+                  if (props.createNewComp) {
+                    props.createNewComp(comp);
+                  }
+                }}
+              >
+                上传阵容
+              </button>
+            ) : (
+              <button
+                style={{ width: "100%", padding: "1rem" }}
+                onClick={() => {
+                  setIsEditing(false);
+                  updateCurrComp();
+                }}
+              >
+                确认修改
+              </button>
+            )
           ) : (
             <button
               style={{ width: "100%", padding: "1rem" }}
@@ -110,9 +162,14 @@ function Comp(props: CompProps) {
               修改阵容
             </button>
           )}
-          <button style={{ width: "100%", padding: "1rem" }}>
-            移到右边(admin)
-          </button>
+          {comp.compId !== -1 && (
+            <button
+              style={{ width: "100%", padding: "1rem" }}
+              onClick={() => confirmCurrComp(true)}
+            >
+              移到右边(admin)
+            </button>
+          )}
         </div>
       )}
     </div>
