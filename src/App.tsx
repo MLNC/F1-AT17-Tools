@@ -37,13 +37,6 @@ function App() {
     window.location.reload();
   };
 
-  // const updateComp = async (oldCompId: number, newComp: CompType) => {
-  //   const filteredCompList = compList.filter(
-  //     (comp) => comp.compId !== oldCompId
-  //   );
-  //   setCompList([newComp, ...filteredCompList]);
-  // };
-
   const generateNewComp = () => {
     let ships: Array<ShipType> = [];
     for (let i = 0; i < 10; i++) {
@@ -52,7 +45,7 @@ function App() {
     const newComp = {
       id: "newComp",
       compId: -1,
-      compName: "newComp",
+      compName: "",
       ships: ships,
       isConfirmed: false,
       note: "",
@@ -95,18 +88,6 @@ function App() {
             adminPassword={adminPassword}
             createNewComp={createNewComp}
           />
-          {/* {compList
-            .filter((comp) => comp.compId === -1)
-            .map((comp) => (
-              <Comp
-                key={-1}
-                comp={comp}
-                isEditing={true}
-                // updateComp={updateComp}
-                adminPassword={adminPassword}
-              />
-            ))} */}
-
           <h1>待定阵容</h1>
           <hr></hr>
           {compList

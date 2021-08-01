@@ -75,6 +75,7 @@ function Comp(props: CompProps) {
                 onChange={(e) => {
                   setComp({ ...comp, compName: e.target.value });
                 }}
+                placeholder="阵容名称"
               ></input>
             </th>
           </tr>
@@ -87,6 +88,7 @@ function Comp(props: CompProps) {
                 onChange={(e) => {
                   setComp({ ...comp, note: e.target.value });
                 }}
+                placeholder="这里多少写点东西"
               ></textarea>
             </th>
           </tr>
