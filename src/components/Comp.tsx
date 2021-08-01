@@ -18,10 +18,6 @@ function Comp(props: CompProps) {
   const [comp, setComp] = useState<CompType>(props.comp);
   const [isEditing, setIsEditing] = useState(props.isEditing);
 
-  useEffect(() => {
-    console.log(comp);
-  }, [comp]);
-
   const updateShip = (idx: number, newShip: ShipType) => {
     const newShips = comp.ships;
     newShips.splice(idx, 1, newShip);

@@ -71,7 +71,6 @@ function App() {
 
   return (
     <div>
-      {console.log(compList)}
       <div style={{ fontWeight: "bold", backgroundColor: "pink" }}>
         <h1>老老实实用，不要搞歪门邪道，发现BUG或者有问题直接找Orca</h1>
         <h2 style={{ paddingBottom: "1rem" }}>多用Ctril+F搜索</h2>
@@ -84,7 +83,7 @@ function App() {
           />
         </div>
       </div>
-      <Calendar></Calendar>
+      <Calendar adminPassword={adminPassword}></Calendar>
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <div>
           <h1>新增阵容</h1>

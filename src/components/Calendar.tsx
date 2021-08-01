@@ -8,7 +8,13 @@ import { createTime } from "../graphql/mutations";
 import { listTimes } from "../graphql/queries";
 import { TimeType } from "../utils/types";
 
-function Calendar() {
+interface CalendarProps {
+  adminPassword: string;
+}
+
+const adminPassword = "IWantATShips";
+
+function Calendar(props: CalendarProps) {
   const now = new Date();
   const [trainDateTime, setTrainDateTime] = useState<Date>(new Date());
   const [timeList, setTimeList] = useState<Array<TimeType>>([]);
@@ -18,7 +24,6 @@ function Calendar() {
   }, []);
 
   const handleDateChange = (year: number, month: number, day: number) => {
-    console.log(year, month, day);
     let newTrainDateTime = new Date(trainDateTime);
     newTrainDateTime.setUTCFullYear(year);
     newTrainDateTime.setUTCMonth(month);
@@ -44,16 +49,20 @@ function Calendar() {
   };
 
   const uploadNewTime = async () => {
-    await API.graphql({
-      query: createTime,
-      variables: {
-        input: {
-          timeId: getNextTimeId(),
-          timeString: trainDateTime.toUTCString(),
+    if (props.adminPassword === adminPassword) {
+      await API.graphql({
+        query: createTime,
+        variables: {
+          input: {
+            timeId: getNextTimeId(),
+            timeString: trainDateTime.toUTCString(),
+          },
         },
-      },
-    });
-    window.location.reload();
+      });
+      window.location.reload();
+    } else {
+      alert("Admin Password错误");
+    }
   };
 
   const getNextTimeId = () => {
@@ -76,14 +85,6 @@ function Calendar() {
             onChange={(date) => {
               if (date) {
                 let newDate = date.toDate();
-                console.log("yyy", date.toString());
-                console.log("zzz", newDate.toString());
-
-                console.log(
-                  newDate.getFullYear(),
-                  newDate.getMonth(),
-                  newDate.getDate()
-                );
                 handleDateChange(
                   newDate.getFullYear(),
                   newDate.getMonth(),
