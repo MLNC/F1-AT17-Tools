@@ -54,6 +54,7 @@ export const getTime = /* GraphQL */ `
       id
       timeId
       timeString
+      opponent
       createdAt
       updatedAt
     }
@@ -70,6 +71,7 @@ export const listTimes = /* GraphQL */ `
         id
         timeId
         timeString
+        opponent
         createdAt
         updatedAt
       }

@@ -18,6 +18,7 @@ function Calendar(props: CalendarProps) {
   const now = new Date();
   const [trainDateTime, setTrainDateTime] = useState<Date>(new Date());
   const [timeList, setTimeList] = useState<Array<TimeType>>([]);
+  const [opponent, setOpponent] = useState("");
 
   useEffect(() => {
     fetchTimeList();
@@ -56,6 +57,7 @@ function Calendar(props: CalendarProps) {
           input: {
             timeId: getNextTimeId(),
             timeString: trainDateTime.toUTCString(),
+            opponent,
           },
         },
       });
@@ -105,6 +107,11 @@ function Calendar(props: CalendarProps) {
               }
             }}
           />
+          <input
+            value={opponent}
+            onChange={(e) => setOpponent(e.target.value)}
+            placeholder="对手"
+          ></input>
           <button style={{ paddingLeft: "1rem" }} onClick={uploadNewTime}>
             添加训练赛(admin)
           </button>
@@ -126,7 +133,9 @@ function Calendar(props: CalendarProps) {
             if (date > now) {
               return (
                 <div>
-                  <h2 style={{ color: "white" }}># {t.timeId}</h2>
+                  <h2 style={{ color: "white" }}>
+                    # {t.timeId} -VS- {t.opponent}
+                  </h2>
                   <TimeZones time={date}></TimeZones>
                 </div>
               );

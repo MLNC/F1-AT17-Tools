@@ -79,6 +79,7 @@ export const createTime = /* GraphQL */ `
       id
       timeId
       timeString
+      opponent
       createdAt
       updatedAt
     }
@@ -93,6 +94,7 @@ export const updateTime = /* GraphQL */ `
       id
       timeId
       timeString
+      opponent
       createdAt
       updatedAt
     }
@@ -107,6 +109,7 @@ export const deleteTime = /* GraphQL */ `
       id
       timeId
       timeString
+      opponent
       createdAt
       updatedAt
     }

@@ -19,4 +19,5 @@ type time @model {
   id: ID!
   timeId: Int!
   timeString: String!
+  opponent: String!
 }

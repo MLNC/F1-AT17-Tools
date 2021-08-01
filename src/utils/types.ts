@@ -18,4 +18,5 @@ export interface CompType {
 export interface TimeType {
   timeId: number;
   timeString: string;
+  opponent: string;
 }
