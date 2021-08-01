@@ -70,3 +70,45 @@ export const deleteComp = /* GraphQL */ `
     }
   }
 `;
+export const createTime = /* GraphQL */ `
+  mutation CreateTime(
+    $input: CreateTimeInput!
+    $condition: ModeltimeConditionInput
+  ) {
+    createTime(input: $input, condition: $condition) {
+      id
+      timeId
+      timeString
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTime = /* GraphQL */ `
+  mutation UpdateTime(
+    $input: UpdateTimeInput!
+    $condition: ModeltimeConditionInput
+  ) {
+    updateTime(input: $input, condition: $condition) {
+      id
+      timeId
+      timeString
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTime = /* GraphQL */ `
+  mutation DeleteTime(
+    $input: DeleteTimeInput!
+    $condition: ModeltimeConditionInput
+  ) {
+    deleteTime(input: $input, condition: $condition) {
+      id
+      timeId
+      timeString
+      createdAt
+      updatedAt
+    }
+  }
+`;

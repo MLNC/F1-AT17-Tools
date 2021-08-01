@@ -14,3 +14,8 @@ export interface CompType {
   isConfirmed: boolean;
   note?: string;
 }
+
+export interface TimeType {
+  timeId: number;
+  timeString: string;
+}

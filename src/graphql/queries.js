@@ -48,3 +48,32 @@ export const listComps = /* GraphQL */ `
     }
   }
 `;
+export const getTime = /* GraphQL */ `
+  query GetTime($id: ID!) {
+    getTime(id: $id) {
+      id
+      timeId
+      timeString
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTimes = /* GraphQL */ `
+  query ListTimes(
+    $filter: ModeltimeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTimes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        timeId
+        timeString
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

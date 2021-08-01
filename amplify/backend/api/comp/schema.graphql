@@ -14,3 +14,9 @@ type Ship {
   hullType: String!
   fitting: String!
 }
+
+type time @model {
+  id: ID!
+  timeId: Int!
+  timeString: String!
+}

@@ -61,3 +61,36 @@ export const onDeleteComp = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTime = /* GraphQL */ `
+  subscription OnCreateTime {
+    onCreateTime {
+      id
+      timeId
+      timeString
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTime = /* GraphQL */ `
+  subscription OnUpdateTime {
+    onUpdateTime {
+      id
+      timeId
+      timeString
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTime = /* GraphQL */ `
+  subscription OnDeleteTime {
+    onDeleteTime {
+      id
+      timeId
+      timeString
+      createdAt
+      updatedAt
+    }
+  }
+`;

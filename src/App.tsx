@@ -8,56 +8,6 @@ import { CompType, ShipType } from "./utils/types";
 import { listComps } from "./graphql/queries";
 import { createComp } from "./graphql/mutations";
 
-// Dummy data
-const dummyShip1: ShipType = {
-  shipId: 1,
-  shipName: "Golem",
-  points: 24,
-  hullType: "Battleship",
-  fitting: "",
-};
-const dummyShip2: ShipType = {
-  shipId: 2,
-  shipName: "Golem",
-  points: 24,
-  hullType: "Battleship",
-  fitting: "",
-};
-const dummyShip3: ShipType = {
-  shipId: 3,
-  shipName: "Golem",
-  points: 24,
-  hullType: "Battleship",
-  fitting: "bb",
-};
-const dummyShip4: ShipType = {
-  shipId: 4,
-  shipName: "Golem",
-  points: 24,
-  hullType: "Battleship",
-  fitting: "aa",
-};
-const dummyComp: CompType = {
-  id: "dummy1",
-  compId: 1,
-  compName: "compName",
-  ships: [dummyShip1, dummyShip2, dummyShip3],
-  note: "notes here",
-  isConfirmed: false,
-};
-
-const dummyConfirmedComp: CompType = {
-  id: "dummy2",
-  compId: 2,
-  compName: "compName2",
-  ships: [dummyShip1, dummyShip2, dummyShip3, dummyShip4],
-  note: "notes here2",
-  isConfirmed: true,
-};
-
-const dummyCompList = [dummyComp, dummyConfirmedComp];
-// Dummy data
-
 function App() {
   const [adminPassword, setAdminPassword] = useState("");
   const [compList, setCompList] = useState<Array<CompType>>([]);
@@ -138,6 +88,7 @@ function App() {
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <div>
           <h1>新增阵容</h1>
+          <hr />
           <Comp
             key={-1}
             comp={generateNewComp()}
